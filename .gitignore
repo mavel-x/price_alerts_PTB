@@ -2,3 +2,4 @@
 *lib
 *bin
 cred.json
+*__pycache__ 
