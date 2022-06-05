@@ -16,7 +16,7 @@ COLLECTION = DATABASE["test_alerts"]
 
 
 def display_10():
-    frame = pd.read_sql('stocks', 'sqlite:///{PATH}bot_stocks.db')
+    frame = pd.read_sql('stocks', f'sqlite:///{PATH}bot_stocks.db')
     frame.index += 1
     return frame.to_markdown(tablefmt="plain", floatfmt=".2f").replace("|","\\|").replace("-","\\-").\
         replace(".","\\.").replace("+","\\+").replace("=","\\=")
