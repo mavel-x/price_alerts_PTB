@@ -1,0 +1,38 @@
+2022-06-06 01:18:23,317 - apscheduler.scheduler - INFO - Scheduler started
+2022-06-06 01:18:23,317 - telegram.ext._application - INFO - Application started
+2022-06-06 01:18:24,077 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/ext/_application.py", line 945, in process_update
+    await coroutine
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/ext/_handler.py", line 135, in handle_update
+    return await self.callback(update, context)
+  File "./main.py", line 46, in button
+    await query.answer()
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/_callbackquery.py", line 172, in answer
+    return await self.get_bot().answer_callback_query(
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/_bot.py", line 238, in decorator
+    result = await func(*args, **kwargs)
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/_bot.py", line 3247, in answer_callback_query
+    result = await self._post(
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/_bot.py", line 310, in _post
+    return await request.post(
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/request/_baserequest.py", line 160, in post
+    result = await self._request_wrapper(
+  File "/home/rabbi/price_alerts_PTB/venv/lib/python3.8/site-packages/telegram/request/_baserequest.py", line 319, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Query is too old and response timeout expired or query id is invalid
+2022-06-06 01:18:28,321 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2022-06-06 01:18:28,321 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-06-06 01:18:28,332 - telegram.ext._application - INFO - Application.stop() complete
+2022-06-06 01:23:20,706 - apscheduler.scheduler - INFO - Scheduler started
+2022-06-06 01:23:20,706 - telegram.ext._application - INFO - Application started
+2022-06-06 01:26:12,993 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2022-06-06 01:26:12,994 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-06-06 01:26:13,004 - telegram.ext._application - INFO - Application.stop() complete
+2022-06-06 01:26:14,697 - apscheduler.scheduler - INFO - Scheduler started
+2022-06-06 01:26:14,697 - telegram.ext._application - INFO - Application started
+2022-06-06 01:27:13,976 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2022-06-06 01:27:13,976 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-06-06 01:27:13,987 - telegram.ext._application - INFO - Application.stop() complete
+2022-06-06 01:27:15,856 - apscheduler.scheduler - INFO - Scheduler started
+2022-06-06 01:27:15,857 - telegram.ext._application - INFO - Application started

@@ -1,4 +1,4 @@
-#! /bin/python3
+#! /home/rabbi/price_alerts_PTB/venv/bin/python3.8
 
 import yfinance as yf
 import pandas as pd

@@ -1,4 +1,4 @@
-#! /bin/python3
+#! /home/rabbi/price_alerts_PTB/venv/bin/python3.8
 
 import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ForceReply
@@ -269,7 +269,7 @@ async def confirmed_delete_all(update: Update, context: CallbackContext):
     await query.answer()
 
     database.delete_all(update.effective_user.id)
-    msg = 'All alerts have been deleted.'
+    msg = 'All your alerts have been deleted.'
     keyboard = [[InlineKeyboardButton('Thanks!', callback_data='back_to_start')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(msg, reply_markup=reply_markup)

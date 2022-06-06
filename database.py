@@ -1,4 +1,4 @@
-#! /bin/python3
+#! /home/rabbi/price_alerts_PTB/venv/bin/python3.8
 
 import yfinance as yf
 import pandas as pd
@@ -6,7 +6,7 @@ import pymongo
 from bson.objectid import ObjectId
 import json
 
-PATH = ''
+PATH = '/home/rabbi/price_alerts_PTB/'
 with open(f'{PATH}cred.json', 'r') as f:
     TOKEN = json.load(f)['TOKEN']
 
@@ -41,7 +41,7 @@ def duplicate_exists(user_id, symbol, price):
 
 
 def delete_all(user_id):
-    COLLECTION.delete_many({'user': user_id})
+    COLLECTION.delete_many({'user_id': user_id})
 
 
 def check_symbol(symbol):

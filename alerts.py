@@ -1,4 +1,4 @@
-#! /bin/python3
+#! /home/rabbi/price_alerts_PTB/venv/bin/python3.8
 
 import yfinance as yf
 from database import COLLECTION, delete_alert
@@ -19,8 +19,11 @@ monitor_symbols = COLLECTION.distinct('symbol')
 def get_prices(monitor_symbols=monitor_symbols):
     price_frame = yf.download(monitor_symbols, period='1d', interval='5m', group_by='column',
                               progress=False, rounding=True)
-    price_frame = price_frame.loc[:,'Adj Close']
-    return price_frame.iloc[-1].to_dict()
+    price_frame = price_frame.loc[:,'Adj Close'].iloc[-1]
+    if len(monitor_symbols) < 2:
+        return {monitor_symbols[0]: price_frame}
+    else:
+        return price_frame.to_dict()
 
 
 def check_alerts(current_prices):
