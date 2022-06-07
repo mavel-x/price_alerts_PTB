@@ -300,7 +300,6 @@ def main() -> None:
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button))
     application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(CommandHandler("browse", fetch_alerts))
     application.add_handler(create_alert_handler)
     application.add_handler(MessageHandler(filters.TEXT & (~ filters.Regex('^[a-zA-Z.-]{1,6}$')), create_alert))
 
