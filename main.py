@@ -14,15 +14,16 @@ logging.basicConfig(
 )
 
 TYPING_SYMBOL, TYPING_PRICE = range(2)
+re_tickers = '^[a-zA-Z.-]{1,8}$'
 
 
 async def start(update: Update, context: CallbackContext) -> None:
     msg = f"Create alerts for any ticker from Yahoo Finance by sending me " \
           f"the desired ticker symbol\.\n" \
           f"If you don't know the right symbol for the ticker, you may find it " \
-          f"at https://finance\.yahoo\.com/\n" \
-          f"This bot was created with python\-telegram\-bot and yfinance\.\n" \
-          f"Here are the top 10 stocks by market cap to get you started\.\n\n" \
+          f"at https://finance\.yahoo\.com/\n\n" \
+          f"This bot was created with python\-telegram\-bot and yfinance\.\n\n" \
+          f"Here are the top 10 stocks by market cap to get you started\:\n\n" \
           f"`{database.display_10()}`\n\n"
 
     keyboard = [
@@ -76,7 +77,8 @@ async def button(update: Update, context: CallbackContext):
 
 
 async def create_alert(update: Update, context: CallbackContext):
-    msg = f"To create an alert, just send me the ticker symbol you want to be alerted about (up to 6 characters)."
+    msg = f"To create an alert, just send me the ticker symbol you want to be alerted about (up to 8 characters, " \
+          f"digits are not permitted)."
     await update.effective_chat.send_message(text=msg)
     return TYPING_SYMBOL
 
@@ -276,8 +278,9 @@ async def confirmed_delete_all(update: Update, context: CallbackContext):
 
 
 async def help_command(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text("Press /start to use this bot or send me the symbol for the ticker "
-                                    "you would like to get alerted about (up to 6 characters).")
+    await update.message.reply_text("Press /start to get the intro message for this bot or send me the symbol for "
+                                    "the ticker you would like to get alerted about (up to 8 characters, "
+                                    "digits are not permitted).")
 
 
 def main() -> None:
@@ -285,10 +288,10 @@ def main() -> None:
 
     create_alert_handler = ConversationHandler(
         entry_points=[CommandHandler("create", create_alert),
-                      MessageHandler(filters.TEXT & filters.Regex('^[a-zA-Z.-]{1,6}$'), callback=price_prompt)],
+                      MessageHandler(filters.TEXT & filters.Regex(re_tickers), callback=price_prompt)],
         states={
             TYPING_SYMBOL: [
-                MessageHandler(filters.TEXT & filters.Regex('^[a-zA-Z.-]{1,6}$'), callback=price_prompt)
+                MessageHandler(filters.TEXT & filters.Regex(re_tickers), callback=price_prompt)
             ],
             TYPING_PRICE: [
                 MessageHandler(filters.TEXT & (~ filters.COMMAND), callback=alert_to_db)
@@ -301,7 +304,7 @@ def main() -> None:
     application.add_handler(CallbackQueryHandler(button))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(create_alert_handler)
-    application.add_handler(MessageHandler(filters.TEXT & (~ filters.Regex('^[a-zA-Z.-]{1,6}$')), create_alert))
+    application.add_handler(MessageHandler(filters.TEXT & (~ filters.Regex(re_tickers)), create_alert))
 
     application.run_polling()
 

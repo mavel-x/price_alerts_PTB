@@ -1,7 +1,7 @@
 #! /home/rabbi/price_alerts_PTB/venv/bin/python3.8
 
 import yfinance as yf
-from database import COLLECTION, delete_alert
+from database import ALERTS, delete_alert
 from telegram import Bot
 import asyncio
 import logging
@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.INFO, filename=f'{PATH}alerts.log'
 )
 
-monitor_symbols = COLLECTION.distinct('symbol')
+monitor_symbols = ALERTS.distinct('symbol')
 
 
 def get_prices(monitor_symbols=monitor_symbols):
@@ -29,7 +29,7 @@ def get_prices(monitor_symbols=monitor_symbols):
 def check_alerts(current_prices):
     triggered = []
     for symbol in monitor_symbols:
-        query = COLLECTION.find({"$or": [{'symbol': symbol, 'up': True, 'price': {"$lt": current_prices[symbol]}},
+        query = ALERTS.find({"$or": [{'symbol': symbol, 'up': True, 'price': {"$lt": current_prices[symbol]}},
                                          {'symbol': symbol, 'up': False, 'price': {"$gt": current_prices[symbol]}}
                                          ]})
         triggered.append([x for x in query])
@@ -39,7 +39,7 @@ def check_alerts(current_prices):
 async def send_alerts(triggered):
     bot = Bot(TOKEN)
     for alert in triggered:
-        await bot.send_message(chat_id=alert["user_id"], text=f'{alert["symbol"]} reached {alert["price"]}!')
+        await bot.send_message(chat_id=alert["user_id"], text=f'🔷 {alert["symbol"]} reached {alert["price"]}!')
         delete_alert(alert["_id"])
 
 

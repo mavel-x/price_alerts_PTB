@@ -1,5 +1,6 @@
 # created by virtualenv automatically
 *lib
 *bin
+*__pycache__
+*.log
 cred.json
-*__pycache__ 
